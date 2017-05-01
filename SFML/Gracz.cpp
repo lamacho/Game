@@ -1,10 +1,10 @@
 #include <iostream>
-
+#include "node.h"
 #include "Gracz.h"
 
 
 
-void Gracz::walk_up(){
+void Gracz::walk_up() {
 	if (!dead) {
 		if (source.y <= 4) {
 			source.y = Up;
@@ -17,7 +17,7 @@ void Gracz::walk_up(){
 
 void Gracz::walk_down() {
 	if (!dead) {
-		if (source.y < 4 ) {
+		if (source.y < 4) {
 			source.y = Down;
 		}
 		else source.y = Down_a;
@@ -57,6 +57,7 @@ void Gracz::czy_ruch() {
 		}
 		playerImage.setTextureRect(sf::IntRect(source.x * 60, source.y * 60, 60, 60));
 	}
+	setG(HP, ATAK, SPD);
 }
 
 void Gracz::Update() {
@@ -66,47 +67,60 @@ void Gracz::Update() {
 
 		hitbox.left = playerImage.getPosition().x;
 		hitbox.top = playerImage.getPosition().y;
+
 	}
+	setG(HP, ATAK, SPD);
 }
 
+Gracz* Gracz::getter() { return this; }
+
 void Gracz::hit(Mob *mob) {
-	if (!dead) {
-		if (hitbox.intersects(mob->box)) {
-			int kierunek = source.y - 4;
-			//std::cout << "hit";
-			mob->HP -= ATAK;
-			mob->is_dead();
-			//mob->hited(kierunek);
-		}
+	if (hitbox.intersects(mob->box)) {
+		int kierunek = source.y-4;
+		//std::cout << "hit";
+		mob->HP -= ATAK;
+		mob->is_dead();
+		setG(HP, ATAK, SPD);
+		//mob->hited(kierunek);
+	}
+}
+void Gracz::hit(Gracz* mob) {
+	if (hitbox.intersects(mob->box)) {
+		int kierunek = source.y - 4;
+		//std::cout << "hit";
+		mob->HP -= ATAK;
+		mob->is_dead();
+		setG(HP, ATAK, SPD);
+		//mob->hited(kierunek);
 	}
 }
 
 void Gracz::hited(Mob *mob) {
 	HP -= mob->ATAK;
+	setG(HP, ATAK, SPD);
+	//std::cout << HP;
 	is_dead();
 }
 
-Gracz* Gracz::getter() { return this; }
-
-bool Gracz::is_dead() {
-	if (HP <= 0 ) {
+bool Gracz::is_dead() { //obs³uga œmierci gracza
+	if (HP <= 0) {
 		if (!pTexture.loadFromFile("grave.png"))
 			std::cout << "nie udalo sie zaladowc textury gracza" << std::endl;
 		playerImage.setTexture(pTexture);
 		source.x = 0;
 		source.y = 0;
 		playerImage.setTextureRect(sf::IntRect(source.x * 60, source.y * 60, 60, 60));
-		
+		setG(HP, ATAK, SPD);
 		ruch = false;
 		Update();
-		std::cout << "dead";
+		//std::cout << "dead";
 		dead = true;
 		return true;
-	
+
 	}
 	return false;
 }
 
 std::ostream & operator<< (std::ostream &wyjscie, const Gracz &s) {
-	return wyjscie << "HP: " << s.HP << std::endl << "SILA: " << s.ATAK << std::endl << "PUNKTY: " << s.PT << std::endl << "x: " << s.playerImage.getPosition().x<<" y: "<< s.playerImage.getPosition().y<<std::endl;
+	return wyjscie << "HP: " << s.HP << std::endl << "SILA: " << s.ATAK << std::endl << "PUNKTY: " << s.PT << std::endl;
 }
