@@ -1,4 +1,5 @@
 #include <iostream>
+#include "node.h"
 #include "Mob.h"
 
 int Mob::act_id_mob = 0;
@@ -98,3 +99,6 @@ void Mob::hited(int kierunek) {
 	else std::cout << "blad" << std::endl;
 }
 
+void Mob::AI() {
+
+}

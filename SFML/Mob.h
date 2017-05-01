@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<SFML/Graphics.hpp>
+#include "node.h"
 #include "Gracz.h"
 
 
@@ -41,10 +42,10 @@ public:
 		box.width = 60;
 		box.left = mobImage.getPosition().x;
 		box.top = mobImage.getPosition().y;
-		boxat.height = 60;
-		boxat.width = 60;
-		boxat.left = mobImage.getPosition().x;
-		boxat.top = mobImage.getPosition().y;
+		boxat.height = 70;
+		boxat.width = 70;
+		boxat.left = mobImage.getPosition().x-5;
+		boxat.top = mobImage.getPosition().y-5;
 
 		ruch = false;
 		HP = 3;
