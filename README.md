@@ -11,6 +11,6 @@ value have to delete this timers bonus)
 This project is still undone. Im working on it and here is much to do. 
 
 First tests results:
-* much fun in play with friends
+* much fun when playing with friends
 * Bugs with mobs placed near doors (to get know why and resolve!)
 * To short gameplay (match ends mostly after about 30 seconds) solution - corrections in HP value and in ATAK value
